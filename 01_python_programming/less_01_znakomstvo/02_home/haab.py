@@ -1,5 +1,3 @@
-# Календарь Хааб
-
 num = int(input())
 
 if num > 360:
@@ -7,8 +5,8 @@ if num > 360:
 elif num == 0:
     print(f"Месяц {1}, день {0}.")
 else:
-    month = num // 19 + 1 if num % 19 != 0 else num // 19
-    day = num - (month - 1) * 19 - 1
+    month = num // 20 + 1 if num % 20 != 0 else num // 20
+    day = num - (month - 1) * 20 - 1
     # print(f"Месяц {month}, день {day}.")
 
     print(f"Месяц {month}, день {day}.")
