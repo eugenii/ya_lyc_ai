@@ -5,6 +5,7 @@ w0 = 0.2
 w1 = 0.5
 x = 2
 
+
 def z(x):
     return w0 + w1 * x
 

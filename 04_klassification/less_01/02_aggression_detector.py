@@ -6,10 +6,11 @@ from math import exp
 AGGRO_WORDS = {
     "дурак": 2.0,
     "достал": 1.1,
-    "глупый": 0.3,
-    "наивный": 1.1,
+    "глупый": 0.5,
+    "наивный": 0.7,
     "ужасный": 1.9,
-    "ненавижу": 0.7
+    "ненавижу": 2.7,
+    "сказку": -0.25
 } 
 
 
@@ -30,15 +31,25 @@ def predict_agress(text):
     is_agress = False
     for word, weight in AGGRO_WORDS.items():
         if word in text:
-            score += weight	 # каждое ключевое слово добавляет «доказательства» спама
-            probability = sigmoid(score)	# переводим итог в вероятность от 0 до 1
-            is_agress = probability >= 0.5    # применяем пороговое решение
-        return probability, is_agress
+            score += weight	 # каждое ключевое слово добавляет «доказательства» агрессии
+    probability = sigmoid(score)	# переводим итог в вероятность от 0 до 1
+    is_agress = probability >= 0.5    # применяем пороговое решение
+    return probability, is_agress
 
+probs = [
+    'Привет, дурак!',
+    'Сестра попросила почитать ей сказку про Ивана-дурака!',
+    'Какой же ты глупый!',
+    'Какой же сегодня ужасный день!',
+    'Я ненавижу его!'
+]
 
-message = input()
-prob, label = predict_agress(message)
-print(label)
+# message = input()
+for message in probs:
+    prob, label = predict_agress(message)
+    print(message)
+    print("Вероятность агрессии: {:.2f}".format(prob))
+    print(label)
 
 # messages = [
 #     'Привет, дурак!',
