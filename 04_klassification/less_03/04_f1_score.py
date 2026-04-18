@@ -32,12 +32,10 @@ def f1_score(y_pred, y_true):
     recall = tp / (tp + fn)
     return 2 * precision * recall / (precision + recall)
 
-
-
 tp = 0
 fn = 0
 fp = 0
 tn = 0
 
 result = f1_score(y_pred, y_true)
-print(round(result, 3))
+print('f1_score: {:.3f}'.format(result))

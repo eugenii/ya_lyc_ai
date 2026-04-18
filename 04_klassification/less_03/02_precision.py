@@ -3,6 +3,7 @@ import numpy as np
 y_true = np.array([int(i) for i in input().split()])
 y_pred = np.array([int(i) for i in input().split()])
 
+
 def precision(y_true, y_pred):
     # Вычисляем True Positives (TP) и False Positives (FP)
     tp = np.sum((y_true == 1) & (y_pred == 1))  # TP: истинные значения = 1 И предсказанные значения = 1

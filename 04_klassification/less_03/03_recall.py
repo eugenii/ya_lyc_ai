@@ -8,15 +8,9 @@ def recall(y_true, y_pred):
         return 0
     if len(y_true) == 0:
         return 0
-    tp = 0
-    fn = 0
-    for i in range(len(y_true)):
-        if y_true[i] == y_pred[i]:
-            if y_true[i] == 1:
-                tp += 1
-        if y_true[i] != y_pred[i]:
-            if y_true[i] == 1:
-                fn += 1
+    tp = np.sum((y_true == 1) & (y_pred == 1))  # TP: истинные значения = 1 И предсказанные значения = 1
+    fn = np.sum((y_true == 1) & (y_pred == 0))  # FP: истинные значения = 0 И предсказанные значения = 1
+
     return tp / (tp + fn)
 
 

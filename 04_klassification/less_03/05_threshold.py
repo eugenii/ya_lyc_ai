@@ -1,7 +1,6 @@
 # 05 Трешхолд (порог).
 import numpy as np
 
-
 y_true = np.array([int(i) for i in input().split()])
 
 y_prob = np.array([float(i) for i in input().split()])
