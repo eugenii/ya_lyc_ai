@@ -1,31 +1,52 @@
 import pandas as pd
-from sklearn.cluster import KMeans, DBSCAN
+import numpy as np
+from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
 
-
+# Загрузка данных
 raw_data = pd.read_csv('high_popularity_spotify_data.csv')
 data = raw_data[['energy', 'speechiness', 'instrumentalness']]
 
+# Масштабирование
 scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data)
 
-data_scaled = scaler.fit_transform(data)    
+# Хранение результатов
+results = []
 
-dbscan_all = []
+for min_samples in range(3, 11):  # от 3 до 10 включительно
+    dbscan = DBSCAN(eps=0.4, min_samples=min_samples)
+    labels = dbscan.fit_predict(data_scaled)
+    
+    # Число кластеров (без шума)
+    unique_labels = set(labels)
+    n_clusters = len(unique_labels) - (1 if -1 in unique_labels else 0)
+    
+    # Доля шума
+    noise_ratio = np.sum(labels == -1) / len(labels)
+    noise_ratio_rounded = round(noise_ratio, 4)
+    
+    results.append({
+        'min_samples': min_samples,
+        'n_clusters': n_clusters,
+        'noise_ratio': noise_ratio_rounded
+    })
+    
+    print(f"min_samples={min_samples}, кластеров={n_clusters}, шум={noise_ratio_rounded}")
 
-max_clusters = 0
-for min_sample in range(3, 10):
-    dbscan = DBSCAN(eps=0.4, min_samples=min_sample)
-    dbscan.fit_predict(data_scaled)
-    labels = dbscan.labels_
-    if len(labels) > max_clusters:
-        max_clusters = len(labels)
-    noise_part = sum(labels == -1) / len(labels)
-    dbscan_all.append((len(labels), min_sample, noise_part))
+# Выбор min_samples с максимальным числом кластеров и долей шума < 0.2
+valid_results = [r for r in results if r['noise_ratio'] < 0.2]
 
-result = [(max_clusters, min_sample, float(noise_part)) for (max_clusters, min_sample, noise_part) 
-          in dbscan_all if (max_clusters == min_sample) and noise_part < 0.2]
+if valid_results:
+    max_clusters_val = max(r['n_clusters'] for r in valid_results)
+    candidates = [r for r in valid_results if r['n_clusters'] == max_clusters_val]
+    # Если несколько, берём минимальное min_samples
+    best = min(candidates, key=lambda x: x['min_samples'])
+    
+    print(f"\nРезультат: {best['min_samples']},{best['n_clusters']},{best['noise_ratio']:.4f}")
+else:
+    print("Нет подходящих вариантов с долей шума < 0.2")
 
-print(dbscan_all)
-print(result)
+# >3,12,0.0397<
 
 
