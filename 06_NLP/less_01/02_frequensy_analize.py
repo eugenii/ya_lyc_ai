@@ -10,9 +10,7 @@ nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('punkt_tab')
 
-
 df = pd.read_csv('short_imdb.csv', encoding='utf-8')
-
 
 text_column = 'review'
 
