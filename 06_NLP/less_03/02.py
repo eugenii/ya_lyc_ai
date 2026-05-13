@@ -11,4 +11,4 @@ print("Модель загружена!")
 # similarity = model.similarity("cat", "dog")
 for  word in ('call', 'battery', 'mobile', 'screen', 'voice'):
     similarity = model.similarity(word, "phone")
-    print(f"Схожесть '{word}' и 'phone': {similarity}")
+    print(f"Схожесть '{word}', 'phone': {similarity}")
