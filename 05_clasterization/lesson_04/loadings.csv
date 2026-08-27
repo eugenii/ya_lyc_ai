@@ -1,9 +1,0 @@
-PC1_loading,PC2_loading,PC3_loading,feature
-0.5525,-0.2539,-0.0951,energy
-0.218,0.6903,-0.0004,danceability
-0.1016,-0.3279,0.6604,tempo
-0.531,-0.0726,-0.0338,loudness
-0.3287,0.3471,-0.2784,valence
--0.4884,0.1889,-0.0662,acousticness
-0.0913,0.4359,0.6869,speechiness
-0.3633,0.0,0.0,silhouette_score
